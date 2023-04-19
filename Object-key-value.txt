@@ -1,0 +1,9 @@
+#/bin/bash
+object1='{"a":{"b":{"c":"d"}}}'
+object2='{"x":{"y":{"z":"a"}}}'
+
+value1=$(get_value "$object1" "a/b/c")
+value2=$(get_value "$object2" "x/y/z")
+
+echo "$value1"  
+echo "$value2" 
