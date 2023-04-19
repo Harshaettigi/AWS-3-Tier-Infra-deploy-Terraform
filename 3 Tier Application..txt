@@ -1,0 +1,32 @@
+Tech Stack Used.
+
+1. Aws Cloud.
+2. Aws Services - Vpc, Ec2, Application LB, RDS. 
+3. LAMP Stack - Linux OS, Apache, Mysql, PHP.
+
+Task- Network Setup. 
+Created a vpc with 6 subnet across 2 availability zone. 
+2 public subnet for ALB.
+2 public subnet for App.
+2 public subnet for RDS.
+Created Route tables for each subnet.
+Created NAT for App Subnet.
+Created Internet Gateway. 
+
+Task - Ec2/VM Setup. 
+Created a Bastion Host/Jump Machine.
+Created 2 Vm for App. 
+
+Task - RDS.
+Created RDS with mysql.
+
+Task - ALB.
+Created ALB with target group. 
+
+Task - Ec2 Setup.
+Setup of LAMP using this Document - https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-lamp-amazon-linux-2.html
+
+Task - Cofigure.
+Configure ALB to send traffic to Ec2 instances. 
+
+Url to access the app - Task-alb-1-390792882.us-east-2.elb.amazonaws.com
