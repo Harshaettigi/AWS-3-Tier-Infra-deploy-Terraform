@@ -30,3 +30,4 @@ Task - Cofigure.
 Configure ALB to send traffic to Ec2 instances. 
 
 Url to access the app - Task-alb-1-390792882.us-east-2.elb.amazonaws.com
+
