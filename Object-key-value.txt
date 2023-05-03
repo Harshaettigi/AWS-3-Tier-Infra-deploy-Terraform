@@ -1,10 +1,15 @@
-# Bash Script
-#/bin/bash
-object1='{"a":{"b":{"c":"d"}}}'
-object2='{"x":{"y":{"z":"a"}}}'
+def get_value(obj, key):
+    keys = key.split('/')
+    for k in keys:
+        obj = obj.get(k)
+        if obj is None:
+            return None
+    return obj
 
-value1=$(get_value "$object1" "a/b/c")
-value2=$(get_value "$object2" "x/y/z")
+object1 = {"a":{"b":{"c":"d"}}}
+key1 = 'a/b/c'
+print(get_value(object1, key1)) 
 
-echo "$value1"  
-echo "$value2" 
+object2 = {"x":{"y":{"z":"a"}}}
+key2 = 'x/y/z'
+print(get_value(object2, key2))
