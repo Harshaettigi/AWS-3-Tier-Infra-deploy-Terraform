@@ -50,6 +50,7 @@ resource "aws_subnet" "web-1" {
 resource "aws_subnet" "app" {
   vpc_id     = aws_vpc.Task.id
   cidr_block = var.private_subnet_cidr_block_app
+  availability_zone = "us-east-2b"
   tags = {
     Name = "app"
   }
@@ -113,7 +114,6 @@ resource "aws_route_table_association" "rds" {
   route_table_id = aws_route_table.rds.id
 }
 
-# Create internet gateway
 resource "aws_internet_gateway" "igw-1" {
   vpc_id = aws_vpc.Task.id
 
@@ -139,11 +139,18 @@ resource "aws_eip" "nat-1" {
   }
 }
 
+resource "aws_route" "nat_gateway" {
+  route_table_id            = aws_route_table.app.id
+  destination_cidr_block    = "0.0.0.0/0"
+  nat_gateway_id            = aws_nat_gateway.nat-1.id
+}
+
 resource "aws_instance" "bastion" {
   ami                    = "ami-06d5c50c30a35fb88"
   instance_type          = "t2.micro"
-  #vpc_id            = aws_vpc.Task.id
   subnet_id              = aws_subnet.web.id
+  key_name               = "Task"
+  associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.bastion-sg.id]
 
   tags = {
@@ -154,8 +161,8 @@ resource "aws_instance" "bastion" {
 resource "aws_instance" "app1" {
   ami           = "ami-06d5c50c30a35fb88"
   instance_type = "t2.micro"
-  #vpc_id            = aws_vpc.Task.id
   subnet_id     = aws_subnet.app.id
+  key_name      = "Task"
   vpc_security_group_ids = [
     aws_security_group.ec2-app-sg.id
   ]
@@ -168,8 +175,8 @@ resource "aws_instance" "app1" {
 resource "aws_instance" "app2" {
   ami           = "ami-06d5c50c30a35fb88"
   instance_type = "t2.micro"
-  #vpc_id            = aws_vpc.Task.id
   subnet_id     = aws_subnet.app.id
+  key_name      = "Task"
   vpc_security_group_ids = [
     aws_security_group.ec2-app-sg.id
   ]
@@ -325,3 +332,5 @@ resource "aws_lb_target_group_attachment" "tg-app-attachment-2" {
   target_id        = aws_instance.app2.id
   port             = 80
 }
+
+######################################
